@@ -18,3 +18,13 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build
       run: cargo build --verbose --release 
+    - name: step 2 - Add artifacts to publish to the temp folder
+      run: |
+        cd downloads
+        cp /home/runner/work/ls-ad-users/ls-ad-users/target/release/ls-ad-users .
+        cd ..
+    - name: Step 3 - Use the Upload Artifact GitHub Action
+      uses: actions/upload-artifact@v2
+      with: 
+        name: assets-for-download
+        path: downloads

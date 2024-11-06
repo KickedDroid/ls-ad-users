@@ -57,8 +57,10 @@ pub fn create_user_list(ldap: &mut LdapConn, base_dn: &str, output: PathBuf) -> 
     for entry in results.0 {
         if let Some(name) = SearchEntry::construct(entry).attrs.get("sAMAccountName") {
             //println!("{:?}", name.first().unwrap());
-            total_users += 1;
-            writeln!(file, "{}", name.first().unwrap())?;
+            if !name.first().unwrap().ends_with("$") {
+                total_users += 1;
+                writeln!(file, "{}", name.first().unwrap())?;
+            }
         }
     }
     println!("[+] Created user list with {} entries.", total_users);

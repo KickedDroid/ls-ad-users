@@ -6,3 +6,11 @@ edition = "2021"
 [dependencies]
 clap = { version = "4.5.20", features = ["derive"] }
 ldap3 = "0.11.5"
+
+
+[profile.release]
+panic = "abort"
+opt-level = "z"
+strip = "symbols"
+lto = true
+codegen-units = 1

@@ -44,7 +44,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Get Password Policy
     get_password_policy(& mut ldap, &base_dn)?;
     // Create User List
-    create_user_list(&mut ldap, base_dn.as_str(), args.output)?;
+    match create_user_list(&mut ldap, base_dn.as_str(), args.output) {
+        Ok(_) => {},
+        Err(e) => {
+            eprintln!("{e}")
+        } 
+
+    }
 
     Ok(ldap.unbind()?)
 }
